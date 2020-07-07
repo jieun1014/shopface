@@ -30,7 +30,7 @@ public class OccupationController {
     
     @GetMapping("/occupation/{branchNo}")
     public ModelAndView getOccupationList(@PathVariable int branchNo) {
-        return new ModelAndView("/businessman/occupation/list.html");
+        return new ModelAndView("businessman/occupation/list.html");
     }
     
     @GetMapping(value = "/occupation/{branchNo}", consumes = MediaType.APPLICATION_JSON_VALUE)

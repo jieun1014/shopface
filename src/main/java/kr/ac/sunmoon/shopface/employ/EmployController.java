@@ -35,7 +35,7 @@ public class EmployController {
     
     @GetMapping("/employ/{branchNo}")
     public ModelAndView getEmployList(@PathVariable int branchNo) {
-        return new ModelAndView("/employ/list.html");
+        return new ModelAndView("employ/list.html");
     }
     
     @GetMapping(value = "/employ/{branchNo}", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -45,7 +45,7 @@ public class EmployController {
     
     @GetMapping("/employ")
     public ModelAndView getEmploy(Employ employ) {
-        ModelAndView modelAndView = new ModelAndView("/employ/detail.html");
+        ModelAndView modelAndView = new ModelAndView("employ/detail.html");
         modelAndView.addObject("employ", employService.getEmploy(employ));
         
         return modelAndView;
@@ -54,7 +54,7 @@ public class EmployController {
     @PutMapping(value = "/employ")
     public ModelAndView editEmploy(Employ employ) {
         boolean isSuccess = employService.editEmploy(employ);
-        ModelAndView modelAndView = new ModelAndView("/employ/detail.html");
+        ModelAndView modelAndView = new ModelAndView("employ/detail.html");
         
         return modelAndView;
     }
