@@ -166,8 +166,9 @@ public class EmployServiceImpl implements EmployService {
                     
                     employMapper.update(savedEmploy);
                     savedEmploy.setState('B');
-                    employMapper.update(savedEmploy);
                 }
+                
+                employMapper.update(savedEmploy);
             }
         }
         
