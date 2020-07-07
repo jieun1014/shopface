@@ -18,7 +18,7 @@
 		FROM MEMBER
 		<where>
 			<if test="id != null and !id.equals('')">AND ID = #{id}</if>
-			<if test="email != null and !email.equals('')">AND EMIAL = #{email}</if>
+			<if test="email != null and !email.equals('')">AND EMAIL = #{email}</if>
 		</where>
 	</select>
 	<insert id="insert" parameterType="member">
