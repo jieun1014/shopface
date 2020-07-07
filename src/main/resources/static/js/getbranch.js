@@ -43,8 +43,7 @@ function drawBranchList() {
 				alert("오류가 발생했습니다."); 
 			}
 	});
-
-	return branchNo;
+		return branchNo;
 }
 
 function moveRecord() {

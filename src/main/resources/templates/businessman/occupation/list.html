@@ -98,6 +98,9 @@ $('document').ready(function() {
 
 	function drawOccupationTable() {
 		currentBranchNo = drawBranchList();
+		if (currentBranchNo == null) {
+			currentBranchNo = localStorage.getItem('branchNo');
+		}
 		
 		$.ajax({
 			url: '/occupation/' + currentBranchNo,

@@ -160,6 +160,8 @@
 		html += "</select>";
 		
 		$('#selectBranchDiv').html(html);
+		
+		localStorage.setItem('branchNo', $('#selectBranch').val());
 
 		drawCalendar();
 		getOccupation();

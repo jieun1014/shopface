@@ -144,6 +144,9 @@ $(document).ready(function() {
 	
 	function drawEmploy() {
 		currentBranchNo = drawBranchList();
+		if (currentBranchNo == null) {
+			currentBranchNo = localStorage.getItem('branchNo');
+		}
 
 		var searchData= {
 				name: $('#search-name').val(),
