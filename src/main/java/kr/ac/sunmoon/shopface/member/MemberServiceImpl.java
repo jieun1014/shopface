@@ -105,6 +105,12 @@ public class MemberServiceImpl implements MemberService {
 		
 		Member existMember = memberMapper.select(member);
 		if (existMember != null) {
+			if (oldPassword == null) {
+				memberMapper.update(member);
+				
+				isSuccess = true;
+			}
+			
 			if (member.getPassword() != null) {
 				if (existMember.getPassword().equals(oldPassword)) {
 					BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
