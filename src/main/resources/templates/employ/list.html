@@ -143,18 +143,13 @@ $(document).ready(function() {
 	drawEmploy();
 	
 	function drawEmploy() {
+		currentBranchNo = drawBranchList();
+
 		var searchData= {
 				name: $('#search-name').val(),
+				branchNo: currentBranchNo
 		};
 		
-		if (currentBranchNo > 0) {
-			currentBranchNo = $('#selectBranch').val();		
-		} else {
-			var currentUri = location.pathname;
-			currentBranchNo = Number(currentUri.substring(currentUri.lastIndexOf('/') + 1));
-		}
-		searchData.branchNo = currentBranchNo;
-		drawBranchList(currentBranchNo);
 		
 		if ($("#disableCheck").prop('checked') == true) {
 			searchData.state='D';
@@ -264,10 +259,7 @@ $(document).ready(function() {
 	});
 	
 	$(document).on('change', 'select[name=selectBranch]', function() {
-		var currentValue = $('#selectBranch').val(); 
-		
-		$('option:selected', this).removeAttr('selected');
-		$('#selectBranch > option[value=currentValue]').attr('selected', true);
+		localStorage.setItem('branchNo', $('#selectBranch').val());
 		
 		drawEmploy();
 	})

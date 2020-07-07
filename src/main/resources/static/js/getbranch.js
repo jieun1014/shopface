@@ -2,7 +2,7 @@ var branchNo = 0;
 var userId = $('#user').val();
 
 function drawBranchList() {
-	var branchNos = localStorage.getItem('branchNo');
+	branchNo = localStorage.getItem('branchNo');
 	var getBranchList = $.ajax({
 			url: '/branch',
 			type:'GET',
@@ -41,10 +41,8 @@ function drawBranchList() {
 		$('#selectBranchDiv').html(html);
 		
 	});
-}
-
-function moveTimeTable() {
-	location.href="/timetable/" + branchNo;
+	
+	return branchNo;
 }
 
 function moveRecord() {

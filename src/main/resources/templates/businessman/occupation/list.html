@@ -94,18 +94,10 @@ var header = $("meta[name='_csrf_header']").attr("content");
 var token = $("meta[name=_csrf]").attr("content");
 
 $('document').ready(function() {
-	
 	drawOccupationTable();
 
 	function drawOccupationTable() {
-		if (currentBranchNo > 0) {
-			currentBranchNo = $('#selectBranch').val();		
-		} else {
-			var currentUri = location.pathname;
-			currentBranchNo = Number(currentUri.substring(currentUri.lastIndexOf('/') + 1));
-		}
-		
-		drawBranchList(currentBranchNo);
+		currentBranchNo = drawBranchList();
 		
 		$.ajax({
 			url: '/occupation/' + currentBranchNo,
@@ -154,10 +146,6 @@ $('document').ready(function() {
 	}
 	
 	$(document).on('change', 'select[name=selectBranch]', function() {
-		
-		//$('option:selected', this).removeAttr('selected');
-		//$('#selectBranch > option[value=currentValue]').attr('selected', true);
-		
 		localStorage.setItem('branchNo', $('#selectBranch').val());
 		
 		drawOccupationTable();

@@ -23,7 +23,7 @@
 											<div class="col-sm-12 col-md-6">
 												<div class="row">
 													<div class="form-inline col">
-														<div class="form-inline col-8"></div>
+														<div class="form-inline col-6"></div>
 															<select id="condition" name="condition" class="form-control">
 																<option value="name">이름</option>
 																<option value="state">상태</option>
@@ -105,14 +105,13 @@
 		drawTable();
 		
 		$(document).on('change', 'select[name=selectBranch]', function() {
+			localStorage.setItem('branchNo', $('#selectBranch').val());
+			
 			drawTable();
 		});
 	});
 	function drawTable() {
-		var currentUri = location.pathname;
-		var initBranchNo = Number(currentUri.substring(currentUri.lastIndexOf('/') + 1));
-		
-		var branchNo = $('#selectBranch').val() > 0 ? $('#selectBranch').val() : initBranchNo;
+		var branchNo = drawBranchList();
 		
 		if (branchNo > 0) {
 			var url = "/record?businessmanId=" + username +"&branchNo=" + branchNo;
