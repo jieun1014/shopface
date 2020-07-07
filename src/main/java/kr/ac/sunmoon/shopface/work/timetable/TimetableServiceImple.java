@@ -60,8 +60,6 @@ public class TimetableServiceImple implements TimetableService {
 					for (int i = 0; i < timetables.size(); i++) {
 						int no = timetables.get(i).getNo();
 						
-						log.info("" + no);
-						
 						Schedule parameterSchedule = new Schedule();
 						parameterSchedule.setTimetableNo(no);
 						parameterSchedule.setBranchNo(branchNo);

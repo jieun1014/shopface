@@ -46,14 +46,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-    	  .antMatchers("/login", "/member/form", "/member/check", "/employ/check","/forgotpassword", "/employ/auth").permitAll() 
-    	  .antMatchers(HttpMethod.POST,
-    	  "/member", "/employ", "/login", "/working", "/quitting", "/rejoin").permitAll() 
+		.antMatchers("/member", "/branch", "/branch/**").hasRole("ADMIN")
+		.antMatchers("/schedule/**", "/salary").hasRole("MEMBER")
+    	  .antMatchers("/employ/**", "/timetable/**", "/occupation/**", "/branch").hasRole("BUSINESSMAN")
     	  .antMatchers(HttpMethod.PUT, "/employ","/employ/invite/").permitAll() 
-    	  .antMatchers("/employ/**", "/timetable/**", "/occupation/**", "/branch", "/branch/**").hasRole("BUSINESSMAN")
-    	  .antMatchers("/schedule/**", "/salary").hasRole("MEMBER")
-    	  .antMatchers("/member", "/branch", "/branch/**").hasRole("ADMIN")
-    	  .antMatchers("/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_MEMBER", "ROLE_BUSINESSMAN")
+    	  .antMatchers(HttpMethod.POST, "/member", "/employ", "/login", "/working", "/quitting", "/rejoin").permitAll() 
+    	  .antMatchers("/login", "/member/form", "/member/check", "/employ/check","/forgotpassword", "/employ/auth").permitAll() 
+    	  .anyRequest().authenticated()
 		.and()
 			.formLogin()
 			.loginPage("/login")

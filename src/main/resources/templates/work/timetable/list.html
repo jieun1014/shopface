@@ -119,21 +119,56 @@
 <script type='text/javascript' src="/js/spectrum/docs.js"></script>
 <script type="text/javascript" src="/js/spectrum/prettify.js"></script>
 <script th:inline="javascript">
-	var branchNo = $("#selectBranch").val();
+	var branchNo = 0;
 	var occupation;
 	var employ;
+	
 
-	$(function() {
-		drawSelectBranch();
+	$(document).ready(function() {
+		var getBranchList = $.ajax({
+				url: '/branch',
+				type:'GET',
+				data: {
+					memberId: userId,
+					approvalStatus: 'Y'
+				},
+				dataType: 'JSON',
+				contentType : 'application/json;charset=UTF-8'
+		});
 		
-		branchNo = $("#selectBranch").val();
-		drawCalendar();
-		getOccupation();
-		getEmploy();
-		drawAddModal();
-		drawEditModal();
-		drawBranchList(branchNo);
-
+		$.when(getBranchList).done(function(response) {
+			var html="";
+			html +="<select class='form-control ml-4' id='selectBranch' name='selectBranch'>";
+			
+			if(response.length > 0) {
+				for(var i = 0; i < response.length; i++) {
+					if(branchNo > 0) {
+						if(branchNo == response[i].no) {
+							html += "<option value='" + response[i].no +"' selected>" + response[i].name + "</option>";
+						} else {
+							html += "<option value='" + response[i].no +"'>" + response[i].name + "</option>";
+						}
+					} else {
+						if(i == 0) {
+							html += "<option value='" + response[i].no +"' 'selected'>" + response[i].name + "</option>";
+							branchNo = response[i].no;
+						} else {
+							html += "<option value='" + response[i].no +"'>" + response[i].name + "</option>";
+						}
+					}
+				}
+			}
+			html += "</select>";
+			
+			$('#selectBranchDiv').html(html);
+		}).then(function() {
+			branchNo = $("#selectBranch").val();
+			drawCalendar();
+			getOccupation();
+			getEmploy();
+			drawAddModal();
+			drawEditModal();
+		});
 
 		$(document).on('change', 'select[name=selectBranch]', function() {
 			branchNo = $("#selectBranch").val();
@@ -144,7 +179,7 @@
 			drawAddModal();
 			drawEditModal();
 		})
-		
+
 		$("#addBtn").click(
 				function() {
 					var day = $("#currentDate").val();
@@ -232,48 +267,49 @@
 							editable : false,
 							displayEventEnd : true,
 							events : function(start, end, timezone, callback) {
-								$.ajax({
-									url : "/timetable",
-									type : "get",
-									data : {
-										branchNo : parseInt(branchNo)
-									},
-									datatype : "json",
-									headers : {
-										"Content-Type" : "application/json;charset=UTF-8"
-									},
-									success : function(data) {
-										var events = [];
-										for (i in data) {
-											events
-													.push({
-														id : data[i].timetable.timetableNo
-																+ "/"
-																+ data[i].schedule.no
-																+ "/"
-																+ data[i].schedule.memberId,
-														title : "\n"
-																+ data[i].timetable.occupName
-																+ "\n"
-																+ data[i].schedule.name,
-														start : data[i].timetable.workStartTime,
-														end : data[i].timetable.workEndTime,
-														color : data[i].timetable.occupColor,
-														textColor : "#ffffff"
-													});
-										}
-										callback(events);
-									},
-									error : function(request, status,
-											error) {
-										console.log("Code:"
-												+ request.status + "\n"
-												+ "message:"
-												+ request.responseText
-												+ "\n" + "error:"
-												+ error);
-									}
-								});
+								$
+										.ajax({
+											url : "/timetable",
+											type : "get",
+											data : {
+												branchNo : parseInt(branchNo)
+											},
+											datatype : "json",
+											headers : {
+												"Content-Type" : "application/json;charset=UTF-8"
+											},
+											success : function(data) {
+												var events = [];
+												for (i in data) {
+													events
+															.push({
+																id : data[i].timetable.timetableNo
+																		+ "/"
+																		+ data[i].schedule.no
+																		+ "/"
+																		+ data[i].schedule.memberId,
+																title : "\n"
+																		+ data[i].timetable.occupName
+																		+ "\n"
+																		+ data[i].schedule.name,
+																start : data[i].timetable.workStartTime,
+																end : data[i].timetable.workEndTime,
+																color : data[i].timetable.occupColor,
+																textColor : "#ffffff"
+															});
+												}
+												callback(events);
+											},
+											error : function(request, status,
+													error) {
+												console.log("Code:"
+														+ request.status + "\n"
+														+ "message:"
+														+ request.responseText
+														+ "\n" + "error:"
+														+ error);
+											}
+										});
 							},
 							timeFormat : 'H:mm',
 							eventClick : function(event) {

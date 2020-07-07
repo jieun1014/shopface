@@ -1,4 +1,5 @@
 var selectBranchNo = 0;
+var userId = $('#user').val();
 
 function drawBranchList(currentBranchNo) {
 	if(userId != null && userId != '') {
