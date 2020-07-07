@@ -105,7 +105,7 @@ public class MemberServiceImpl implements MemberService {
 		
 		Member existMember = memberMapper.select(member);
 		if (existMember != null) {
-			if (oldPassword == null) {
+			if (oldPassword == null || "".equals(oldPassword)) {
 				memberMapper.update(member);
 				
 				isSuccess = true;
