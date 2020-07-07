@@ -51,8 +51,7 @@ public class TimetableServiceImple implements TimetableService {
 	public List<TimetableSchedule> getTimetableList(int branchNo) {
 		List<TimetableSchedule> timetableSchedules = new ArrayList<TimetableSchedule>();
 		try {
-			if (branchNo > 0 
-					&& !"".equals(branchNo)) { 
+			if (branchNo > 0) { 
 				Timetable timetable = new Timetable();
 				timetable.setBranchNo(branchNo);
 				List<Timetable> timetables = this.timetableMapper.selectAll(timetable);

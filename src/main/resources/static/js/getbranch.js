@@ -1,9 +1,9 @@
-var selectBranchNo = 0;
+var branchNo = 0;
 var userId = $('#user').val();
 
-function drawBranchList(currentBranchNo) {
-	if(userId != null && userId != '') {
-		$.ajax({
+function drawBranchList() {
+	var branchNos = localStorage.getItem('branchNo');
+	var getBranchList = $.ajax({
 			url: '/branch',
 			type:'GET',
 			data: {
@@ -11,54 +11,51 @@ function drawBranchList(currentBranchNo) {
 				approvalStatus: 'Y'
 			},
 			dataType: 'JSON',
-			contentType : 'application/json;charset=UTF-8',
-			success: function(branchList) {
-				var html="";
-				html +="<select class='form-control ml-4' id='selectBranch' name='selectBranch'>";
-				
-				if(branchList.length > 0) {
-					for(var i = 0; i < branchList.length; i++) {
-						if(currentBranchNo > 0) {
-							if(currentBranchNo == branchList[i].no) {
-								html += "<option value='" + branchList[i].no +"' selected>" + branchList[i].name + "</option>";
-								selectBranchNo = currentBranchNo;
-							} else {
-								html += "<option value='" + branchList[i].no +"'>" + branchList[i].name + "</option>";
-							}
-						} else {
-							if(i == 0) {
-								html += "<option value='" + branchList[i].no +"' 'selected'>" + branchList[i].name + "</option>";
-								selectBranchNo = branchList[i].no;
-							} else {
-								html += "<option value='" + branchList[i].no +"'>" + branchList[i].name + "</option>";
-							}
-						}
+			contentType : 'application/json;charset=UTF-8'
+	});
+	
+	$.when(getBranchList).done(function(response) {
+		var html="";
+		html +="<select class='form-control ml-4' id='selectBranch' name='selectBranch'>";
+		
+		if(response.length > 0) {
+			for(var i = 0; i < response.length; i++) {
+				if(branchNo > 0) {
+					if(branchNo == response[i].no) {
+						html += "<option value='" + response[i].no +"' selected>" + response[i].name + "</option>";
+					} else {
+						html += "<option value='" + response[i].no +"'>" + response[i].name + "</option>";
+					}
+				} else {
+					if(i == 0) {
+						html += "<option value='" + response[i].no +"' 'selected'>" + response[i].name + "</option>";
+						branchNo = response[i].no;
+					} else {
+						html += "<option value='" + response[i].no +"'>" + response[i].name + "</option>";
 					}
 				}
-				html += "</select>";
-				
-				$('#selectBranchDiv').html(html);
-			},
-			error: function(error) {
-				alert(error);
 			}
-		}); 
-	}
+		}
+		html += "</select>";
+		
+		$('#selectBranchDiv').html(html);
+		
+	});
 }
 
 function moveTimeTable() {
-	location.href="/timetable/" + selectBranchNo;
+	location.href="/timetable/" + branchNo;
 }
 
 function moveRecord() {
-	location.href="/record/" + selectBranchNo;
+	location.href="/record/" + branchNo;
 }
 
 function moveEmploy() {
-	location.href="/employ/" + selectBranchNo;
+	location.href="/employ/" + branchNo;
 }
 
 function moveOccupation() {
-	location.href="/occupation/" + selectBranchNo;
+	location.href="/occupation/" + branchNo;
 }
 
