@@ -70,6 +70,11 @@
 				OCCUP_COLOR = #{occupColor},
 			</if>
 		</set>
+		<where> 
+			<if test="timetableNo != null and timetableNo != ''" >
+				AND NO = #{timetableNo}
+			</if>
+		</where>
 	</update>
 
 	<delete id="delete" parameterType="Timetable">

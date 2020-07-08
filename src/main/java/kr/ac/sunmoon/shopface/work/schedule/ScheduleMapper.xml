@@ -93,8 +93,11 @@
 	<update id="update" parameterType="schedule">
 		UPDATE SCHEDULE
 		<set>
-			<if test="state != null">
-				STATE = #{state}
+			<if test="state != null and state != ''">
+				STATE = #{state},
+			</if>
+			<if test="timetableNo != null and timetableNo != ''">
+				TIMETABLE_NO = #{timetableNo}
 			</if>
 		</set>
 		WHERE NO = #{no}

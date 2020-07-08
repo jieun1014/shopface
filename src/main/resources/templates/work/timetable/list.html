@@ -503,6 +503,10 @@
 		html += "<select id='startHour' name='startHour'>";
 		for (var i = 0; i < 25; i++) {
 			if (i < 10) {
+				if (i == 0) {
+					html += "<option value='0" + i +"' selected>0" + i + "</option>";
+					continue;
+				}
 				html += "<option value='0" + i +"'>0" + i + "</option>";
 			} else {
 				html += "<option value='" + i + "'>" + i + "</option>";
@@ -510,11 +514,19 @@
 		}
 		html += "</select> 시 : <select id='startMin' name='startMin'>";
 		for (var i = 0; i < 6; i++) {
+			if (i == 0) {
+				html += "<option value='"+ i +"0' selected>" + i + "0</option>";
+				continue;
+			}
 			html += "<option value='"+ i +"0'>" + i + "0</option>";
 		}
 		html += "</select> 분  ~ <select id='endHour' name='endHour'>";
 		for (var i = 0; i < 25; i++) {
 			if (i < 10) {
+				if (i == 0) {
+					html += "<option value='0" + i +"' selected>0" + i + "</option>";
+					continue;
+				}
 				html += "<option value='0" + i +"'>0" + i + "</option>";
 			} else {
 				html += "<option value='" + i + "'>" + i + "</option>";
@@ -522,6 +534,10 @@
 		}
 		html += "</select> 시 : <select id='endMin' name='endMin'>";
 		for (var i = 0; i < 6; i++) {
+			if (i == 0) {
+				html += "<option value='"+ i +"0' selected>" + i + "0</option>";
+				continue;
+			}
 			html += "<option value='"+ i +"0'>" + i + "0</option>";
 		}
 		html += "</select> 분 ";

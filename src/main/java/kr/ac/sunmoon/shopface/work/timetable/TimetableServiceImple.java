@@ -21,7 +21,6 @@ public class TimetableServiceImple implements TimetableService {
 	@Override
 	public boolean addTimetable(Timetable timetable, Schedule schedule) {
 		boolean isSuccess = false;
-		
 			if (timetable.getWorkStartTime() != null 
 					&& !"".equals(timetable.getWorkStartTime())
 					&& timetable.getWorkEndTime() != null
@@ -38,6 +37,12 @@ public class TimetableServiceImple implements TimetableService {
 					timetableMapper.insert(timetable);
 					
 					schedule.setTimetableNo(timetableMapper.selectAll(timetable).get(0).getTimetableNo());
+					schedule.setState('R');
+					scheduleMapper.insert(schedule);
+					
+					isSuccess = true;
+				} else if (timetables.size() == 1) {
+					schedule.setTimetableNo(timetables.get(0).getTimetableNo());
 					schedule.setState('R');
 					scheduleMapper.insert(schedule);
 					
@@ -94,17 +99,27 @@ public class TimetableServiceImple implements TimetableService {
 			
 			int compare = current.compareTo(startTime);
 			if (compare < 0) {
-				List<Schedule> schedules = this.scheduleMapper.selectAll(schedule);
-				if (schedules != null && schedules.size() == 1) {
-					this.timetableMapper.update(timetable);
-					return true;
-				} else if (schedules != null && schedules.size() > 1) {
-					this.timetableMapper.insert(timetable);
-					List<Timetable> result = this.timetableMapper.selectAll(timetable);
-					if (result != null && result.size() == 1) {
-						schedule.setTimetableNo(result.get(0).getTimetableNo());
-						this.scheduleMapper.update(schedule);
+				Schedule stateCheck = this.scheduleMapper.select(schedule);
+				
+				if (stateCheck.getState() == 'R' || stateCheck.getState() == 'L') {
+					Schedule select = new Schedule();
+					select.setTimetableNo(schedule.getTimetableNo());
+					List<Schedule> schedules = this.scheduleMapper.selectAll(select);
+					
+					if (schedules != null && schedules.size() == 1) {
+						this.timetableMapper.update(timetable);
 						return true;
+					} else if (schedules != null && schedules.size() > 1) {
+						this.timetableMapper.insert(timetable);
+						
+						List<Timetable> result = this.timetableMapper.selectAll(timetable);
+						if (result != null && result.size() == 1) {
+							
+							schedule.setTimetableNo(result.get(0).getTimetableNo());
+							this.scheduleMapper.update(schedule);
+							return true;
+						}
+						return false;
 					}
 					return false;
 				}
