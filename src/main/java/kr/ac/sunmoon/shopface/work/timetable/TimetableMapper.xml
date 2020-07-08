@@ -16,7 +16,7 @@
 	</insert>
 		<select id="select" parameterType="timetable" resultType="timeTable">
 		SELECT 
-			 NO
+			 NO AS TIMETABLE_NO
 			,BRANCH_NO
 			,TO_CHAR(WORK_START_TIME, 'YYYY-MM-DD HH24:MI:SS') AS "WORK_START_TIME"
 			,TO_CHAR(WORK_END_TIME, 'YYYY-MM-DD HH24:MI:SS') AS "WORK_END_TIME"
@@ -29,7 +29,7 @@
 	
 	<select id="selectAll" parameterType="timetable" resultType="timeTable">
 		SELECT 
-			 NO
+			 NO AS TIMETABLE_NO
 			,BRANCH_NO
 			,TO_CHAR(WORK_START_TIME, 'YYYY-MM-DD HH24:MI:SS') AS "WORK_START_TIME"
 			,TO_CHAR(WORK_END_TIME, 'YYYY-MM-DD HH24:MI:SS') AS "WORK_END_TIME"
@@ -58,22 +58,22 @@
 		UPDATE TIMETABLE
 		<set>
 			<if test="workStartTime != null and workStartTime != ''">
-				AND WORK_START_TIME = TO_DATE(#{workStartTime}, 'YYYY-MM-DD HH24:MI:SS')
+				WORK_START_TIME = TO_DATE(#{workStartTime}, 'YYYY-MM-DD HH24:MI:SS'),
 			</if>
 			<if test="workEndTime != null and workEndTime != ''">
-				AND WORK_END_TIME = TO_DATE(#{workEndTime}, 'YYYY-MM-DD HH24:MI:SS')
+				WORK_END_TIME = TO_DATE(#{workEndTime}, 'YYYY-MM-DD HH24:MI:SS'),
 			</if>
 			<if test="occupName != null and occupName != ''">
-				AND OCCUP_NAME = #{occupName}
+				OCCUP_NAME = #{occupName},
 			</if>
 			<if test="occupColor != null and occupColor != ''">
-				AND OCCUP_COLOR = #{occupColor}
+				OCCUP_COLOR = #{occupColor},
 			</if>
 		</set>
 	</update>
 
 	<delete id="delete" parameterType="Timetable">
 		DELETE FROM TIMETABLE
-		WHERE NO = #{no}
+		WHERE NO = #{timetableNo}
 	</delete>
 </mapper>

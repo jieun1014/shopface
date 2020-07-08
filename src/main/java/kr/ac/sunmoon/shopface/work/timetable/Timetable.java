@@ -17,7 +17,7 @@ import lombok.ToString;
 @Alias(value = "timetable")
 public class Timetable {
 	@NonNull
-	private int no;
+	private int timetableNo;
 	private int branchNo;
 	private String workStartTime;
 	private String workEndTime;
