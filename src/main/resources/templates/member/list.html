@@ -18,20 +18,20 @@
 								<div id="datatables-buttons_wrapper"
 									class="dataTables_wrapper dt-bootstrap4 no-footer">
 									<div class="row">
-										<div class="col-sm-12 col-md-6"></div>
-										<div class="col-sm-12 col-md-6">
-											<!-- form 태그 있던 자리  -->
+										<div class="col-sm-12 col-md-8">
+											<input type="checkbox" id="disableCheck">
+					              			<label for="checkDisabel">비활성화 근무자</label>
+					              			<label id="count-Disable"></label>
+										</div>
+										<div class="col-sm-12 col-md-4">
 											<div class="row">
 												<div class="form-inline col">
-													<div class="form-inline col-8"></div>
-														<select id="condition" name="condition"
-															class="form-control">
-															<option value="name">이름</option>
-															<option value="state">상태</option>
-														</select> <input type="text" id="searchQuery" name="searchQuery"
+													<div class="form-inline col-12"></div>
+														<label for="searchQuery">이름 : </label>
+														<input type="text" id="searchQuery" name="searchQuery"
 															class="form-control form-control-sm mr-1 ml-1" placeholder=""
-															aria-controls="datatables-buttons"> <input
-															type="button" class="btn btn-primary mr-1 ml-1" id="searchButton"
+															aria-controls="datatables-buttons">
+														<input type="button" class="btn btn-primary mr-1 ml-1" id="searchButton"
 															name="searchButton" value="검색">
 												</div>
 											</div>
@@ -82,13 +82,19 @@
 			}
 		})
 	});
+	
+	$('#disableCheck').click(function() {
+		drawTable();
+	});
 
 	function drawTable() {
 		var url = "/member?";
-		if ($('#condition').val() == 'name') {
+		if ($('#searchQuery').val() != '') {
 			url += "name=" + $('#searchQuery').val();
-		} else {
-			url += "state=" +  $('#searchQuery').val();
+		}
+		
+		if ($("#disableCheck").prop('checked') == false) {
+			url += "state=A";
 		}
 		
 		$.ajax({

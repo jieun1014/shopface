@@ -11,4 +11,5 @@ public interface MemberMapper {
 	public Member select(Member member);
 	public void update(Member member);
 	public void delete(Member member);
+	public int countMember(Member member);
 }

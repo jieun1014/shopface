@@ -1,7 +1,5 @@
 package kr.ac.sunmoon.shopface.common;
 
-import java.util.stream.Stream;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -27,13 +25,11 @@ public class CommonController {
 	@GetMapping("/")
 	public ModelAndView index(@AuthenticationPrincipal User user) {
 		if (user != null) {
-			Stream<String> authorities = user.getAuthorities().stream().map(GrantedAuthority::getAuthority);
-
-			if (authorities.anyMatch(authority -> authority.equals("ROLE_ADMIN"))) {
+			if (user.getAuthorities().stream().map(GrantedAuthority::getAuthority).anyMatch(authority -> authority.equals("ROLE_ADMIN"))) {
 				return new ModelAndView(new RedirectView("/member"));
-			} else if (authorities.anyMatch(authority -> authority.equals("ROLE_MEMBER"))) {
+			} else if (user.getAuthorities().stream().map(GrantedAuthority::getAuthority).anyMatch(authority -> authority.equals("ROLE_MEMBER"))) {
 				return new ModelAndView(new RedirectView("/schedule"));
-			} else if (authorities.anyMatch(authority -> authority.equals("ROLE_BUSINESSMAN"))) {
+			} else if (user.getAuthorities().stream().map(GrantedAuthority::getAuthority).anyMatch(authority -> authority.equals("ROLE_BUSINESSMAN"))) {
 				return new ModelAndView(new RedirectView("/timetable"));
 			}
 		}

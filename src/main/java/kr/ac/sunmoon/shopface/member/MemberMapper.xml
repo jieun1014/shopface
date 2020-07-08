@@ -10,6 +10,7 @@
 			<if test="name != null and !name.equals('')">AND NAME LIKE '%'||#{name}||'%'</if>
 			<if test="state != null and state != ''">AND STATE = #{state}</if>
 			<if test="type != null and type != ''">AND TYPE = #{type}</if>
+			<if test="state != null and state != ''">AND STATE = #{state}</if>
 		</where>
 		ORDER BY STATE ASC
 	</select>
@@ -54,8 +55,11 @@
 		WHERE ID = #{id}
 	</delete>
 	
-	<select id="countActiveMember" resultType="Integer">
-		SELECT COUNT(*) FROM MEMBER WHERE STATE = 'A';
+	<select id="countMember" resultType="Integer" parameterType="member">
+		SELECT COUNT(*) FROM MEMBER
+		<where>
+			<if test="STATE != null and STATE != ''">AND STATE = #{state}</if>
+		</where>
 	</select>
 	
 	<select id="pageList" parameterType="criteria" resultType="member">
