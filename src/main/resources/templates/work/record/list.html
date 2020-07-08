@@ -101,6 +101,7 @@
 		
 		$(document).on('change', 'select[name=selectBranch]', function() {
 			localStorage.setItem('branchNo', $('#selectBranch').val());
+			branchNo = drawBranchList();
 			
 			drawTable(url);
 		});

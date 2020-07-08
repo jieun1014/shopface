@@ -80,7 +80,7 @@
                 SALARY = #{salary}, 
             </if>
             <if test="certiCode != null and certiCode != ''">
-                CERTI_CODE = #{certiCode}, 
+                CERTI_CODE = #{certiCode, jdbcType=VARCHAR}, 
             </if>
             <if test="state != null and state != ''">
                 STATE = #{state}, 
