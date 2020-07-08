@@ -23,6 +23,8 @@
 			<if test="memberId != null and memberId != ''">AND MEMBER_ID = #{memberId}</if>
 			<if test="businessmanId != null and businessmanId != ''">AND BUSINESSMAN_ID = #{businessmanId}</if>
 			<if test="branchNo > 0">AND BRANCH_NO = #{branchNo}</if>
+			<if test="branchName != null and branchName != ''">AND BRANCH_NAME = #{branchName}</if>
+			<if test="businessmanName != null and businessmanName != ''">AND BUSINESSMAN_NAME = #{businessmanName}</if>
 		</where>
 	</select>
 	
