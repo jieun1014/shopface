@@ -19,7 +19,7 @@
 										class="dataTables_wrapper dt-bootstrap4 no-footer">
 										<div class="row">
 											<div class="col-sm-12" >
-												<button style="float:right" type='button' id='add_button' class='btn btn-outline-primary' onclick="location.href='/branch/form'">등록</button>
+												<button style="float:right" type='button' id='add_button' class='btn btn-outline-primary' onclick="location.href='/branch/form'" sec:authorize="hasRole('ROLE_BUSINESSMAN')">등록</button>
 											</div>
 										</div>
 										
