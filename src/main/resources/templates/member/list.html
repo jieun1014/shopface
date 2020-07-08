@@ -91,10 +91,16 @@
 		var url = "/member?";
 		if ($('#searchQuery').val() != '') {
 			url += "name=" + $('#searchQuery').val();
-		}
-		
-		if ($("#disableCheck").prop('checked') == false) {
-			url += "state=A";
+			
+			if ($("#disableCheck").prop('checked') == false) {
+				url += "&state=A";
+			} else {
+				url += "&state=D";
+			}
+		} else {
+			if ($("#disableCheck").prop('checked') == false) {
+				url += "&state=A";
+			}
 		}
 		
 		$.ajax({

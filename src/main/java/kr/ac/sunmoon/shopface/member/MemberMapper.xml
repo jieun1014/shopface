@@ -8,7 +8,6 @@
 		FROM MEMBER
 		<where>
 			<if test="name != null and !name.equals('')">AND NAME LIKE '%'||#{name}||'%'</if>
-			<if test="state != null and state != ''">AND STATE = #{state}</if>
 			<if test="type != null and type != ''">AND TYPE = #{type}</if>
 			<if test="state != null and state != ''">AND STATE = #{state}</if>
 		</where>

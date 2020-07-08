@@ -19,7 +19,7 @@ public class Member {
 	private String phone;
 	private String email;
 	private String bankName;
-	private Long accountNum;
+	private String accountNum;
 	private LocalDateTime registerDate;
 	private String state;
 	private String type;
