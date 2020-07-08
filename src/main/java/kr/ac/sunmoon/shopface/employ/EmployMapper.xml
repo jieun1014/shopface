@@ -14,6 +14,9 @@
             <if test="state == ''">
                 AND E.STATE IN('B', 'C')
             </if>
+            <if test="state == 'C'">
+                AND E.STATE = 'C'
+            </if>
             <if test="name != null and name !=''">
                 AND E.NAME LIKE '%'||#{name}||'%'
             </if>

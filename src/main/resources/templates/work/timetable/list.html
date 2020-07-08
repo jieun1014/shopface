@@ -243,6 +243,9 @@
 			url : "/employ/" + parseInt(branchNo),
 			type : "get",
 			async : false,
+			data: {
+				state: 'C'
+			},
 			headers : {
 				"Content-Type" : "application/json;charset=UTF-8"
 			},
