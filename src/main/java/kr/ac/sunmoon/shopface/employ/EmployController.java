@@ -76,7 +76,7 @@ public class EmployController {
     
     @GetMapping("/employ/auth")
     public ModelAndView certificationCode(@RequestParam("date") String expiredDate) {
-    	ModelAndView modelAndView = new ModelAndView("/member/authenticationCode");
+    	ModelAndView modelAndView = new ModelAndView("member/authenticationCode");
     	modelAndView.addObject("date", expiredDate);
     	
     	return modelAndView;
