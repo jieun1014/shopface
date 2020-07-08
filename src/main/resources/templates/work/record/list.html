@@ -59,8 +59,9 @@
 	</th:block>
 </body>
 </html>
-<script type="text/javascript" sec:authorize="hasRole('ROLE_BUSINESSMAN')">
+<script th:inline="javascript" sec:authorize="hasRole('ROLE_BUSINESSMAN')">
 	$(document).ready(function() {
+		var username = /*[[${#authentication.principal.username}]]*/ '';
 		var html = "";
 		html += "<tr role='row'>";
 		html += "<th>업무 명</th>";
@@ -77,10 +78,27 @@
 		html += "</tr>";
 		
 		$('#table_head').html(html);
+		
+		var branchNo = drawBranchList();
+		
+		if (branchNo > 0) {
+			var url = "/record?businessmanId=" + username +"&branchNo=" + branchNo;
+		} else {
+			var url = "/record?memberId=" + username;
+		}
+		
+		drawTable(url);
+		
+		$(document).on('change', 'select[name=selectBranch]', function() {
+			localStorage.setItem('branchNo', $('#selectBranch').val());
+			
+			drawTable(url);
+		});
 	});
 </script>
-<script type="text/javascript" sec:authorize="hasRole('ROLE_MEMBER')">
+<script th:inline="javascript" sec:authorize="hasRole('ROLE_MEMBER')">
 	$(document).ready(function() {
+		var username = /*[[${#authentication.principal.username}]]*/ '';
 		var html = "";
 		html += "<tr role='row'>";
 		html += "<th>업무 명</th>";
@@ -96,29 +114,14 @@
 		html += "</tr>";
 		
 		$('#table_head').html(html);
+		
+		var url = "/record?memberId=" + username;
+		
+		drawTable(url);
 	});
 </script>
 <script th:inline="javascript">
-	var username = /*[[${#authentication.principal.username}]]*/ '';
-	
-	$(document).ready(function() {
-		drawTable();
-		
-		$(document).on('change', 'select[name=selectBranch]', function() {
-			localStorage.setItem('branchNo', $('#selectBranch').val());
-			
-			drawTable();
-		});
-	});
-	function drawTable() {
-		var branchNo = drawBranchList();
-		
-		if (branchNo > 0) {
-			var url = "/record?businessmanId=" + username +"&branchNo=" + branchNo;
-		} else {
-			var url = "/record?memberId=" + username;
-		}
-		
+	function drawTable(url) {
 		/* if ($('#condition').val() == 'name') {
 			url += "name=" + $('#searchQuery').val();
 		} else {
