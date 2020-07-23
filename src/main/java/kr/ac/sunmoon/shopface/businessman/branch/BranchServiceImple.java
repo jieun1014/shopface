@@ -28,22 +28,30 @@ public class BranchServiceImple implements BranchService {
 	
 	@Override
 	public boolean addBranch(Branch branch) {
-		if (branch.getMemberId() != null
-				&& !"".equals(branch.getMemberId())
-				&& branch.getName() != null
-				&& !"".equals(branch.getName())
-				&& branch.getPhone() != null
-				&& !"".equals(branch.getPhone())
-				&& branch.getAddress() != null
-				&& !"".equals(branch.getAddress())
-				&& branch.getDetailAddress() != null
-				&& !"".equals(branch.getDetailAddress())
-				&& branch.getZipCode() != null
-				&& !"".equals(branch.getZipCode())) {
-			this.branchMapper.insert(branch);
-			return true;
-		} else {
-			return false;
+		boolean result = false;
+		try {
+			if (branch.getMemberId() != null
+					&& !"".equals(branch.getMemberId())
+					&& branch.getName() != null
+					&& !"".equals(branch.getName())
+					&& branch.getPhone() != null
+					&& !"".equals(branch.getPhone())
+					&& branch.getAddress() != null
+					&& !"".equals(branch.getAddress())
+					&& branch.getDetailAddress() != null
+					&& !"".equals(branch.getDetailAddress())
+					&& branch.getZipCode() != null
+					&& !"".equals(branch.getZipCode())) {
+				this.branchMapper.insert(branch);
+				result = true;
+			} else {
+				result = false;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = false;
+		} finally {
+			return result;
 		}
 	}
 
@@ -110,6 +118,7 @@ public class BranchServiceImple implements BranchService {
 			}
 		} catch(Exception e) {
 			//3. 존재 안할 시 false값 반환
+			e.printStackTrace();
 			return false;
 		}
 		return false;
@@ -148,6 +157,7 @@ public class BranchServiceImple implements BranchService {
 				} return false;
 			} return false;
 		} catch(Exception e) {
+			e.printStackTrace();
 			return false;
 		}
 	}

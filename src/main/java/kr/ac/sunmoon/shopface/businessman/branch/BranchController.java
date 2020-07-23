@@ -1,6 +1,7 @@
 package kr.ac.sunmoon.shopface.businessman.branch;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,6 +52,7 @@ public class BranchController {
 				redirect.addAttribute("result", "addFail");
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			redirect.addAttribute("result", "addFail");
 		} finally {
 			return mav;
@@ -73,7 +75,14 @@ public class BranchController {
 	 */
 	@GetMapping(value = "/branch", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public List<Branch> getBranchList(Branch branch) {
-		return this.branchService.getBranchList(branch);
+		List<Branch> branches = new ArrayList<Branch>();
+		try {
+			branches = this.branchService.getBranchList(branch);			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			return branches;
+		}
 	}
 
 	/**
@@ -88,6 +97,7 @@ public class BranchController {
 			Branch branch = this.branchService.getBranch(no);
 			mav.addObject("branch", branch);
 		} catch (Exception e) {
+			e.printStackTrace();
 			mav.addObject("branch", new Branch());
 		} finally {
 			return mav;
@@ -107,6 +117,7 @@ public class BranchController {
 				redirect.addAttribute("result", "editFail");
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			redirect.addAttribute("result", "editFail");
 		}
 
@@ -128,6 +139,7 @@ public class BranchController {
 			}
 
 		} catch (Exception e) {
+			e.printStackTrace();
 			mav.addObject("result", "deleteFail");
 		}
 
